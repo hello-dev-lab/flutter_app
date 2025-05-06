@@ -142,23 +142,56 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
   }
 
-  Future<void> _deleteUser(int id) async {
-    try {
-      final response = await UserServices.deleteUser(id);
-      if (response.statusCode == 200) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('User deleted')));
-        _fetchUser();
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Delete failed: ${response.body}')),
-        );
-      }
-    } catch (e) {
+ Future<void> _deleteUser(int id) async {
+  // Show the confirmation dialog before deleting
+  bool shouldDelete = await _showDeleteConfirmationDialog();
+  
+  if (!shouldDelete) return; // If user cancels, do not proceed with deletion
+
+  try {
+    final response = await UserServices.deleteUser(id);
+    if (response.statusCode == 200) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('User deleted')));
+      _fetchUser();
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Error deleting user')));
+        SnackBar(content: Text('Delete failed: ${response.body}')),
+      );
     }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Error deleting user')));
   }
+}
+
+Future<bool> _showDeleteConfirmationDialog() async {
+  return await showDialog<bool>(
+    context: context,
+    barrierDismissible: false, // Prevent dismissing the dialog by tapping outside
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Confirm Deletion'),
+        content: const Text('Are you sure you want to delete this user?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(false); // Return false when 'No' is pressed
+            },
+            child: const Text('No'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(true); // Return true when 'Yes' is pressed
+            },
+            child: const Text('Yes'),
+          ),
+        ],
+      );
+    },
+  ) ?? false; // If the user taps outside the dialog, return false
+}
+
 
   void _filterUsers() {
     final keyword = _searchController.text.toLowerCase();
