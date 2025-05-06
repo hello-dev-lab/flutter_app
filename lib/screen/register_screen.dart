@@ -37,8 +37,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Future<void> _fetchUser() async {
     final String apiUrl = ApiPath.getAll;
     try {
-      final response =
-          await http.get(Uri.parse(apiUrl)).timeout(const Duration(seconds: 10));
+      final response = await http
+          .get(Uri.parse(apiUrl))
+          .timeout(const Duration(seconds: 10));
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         final List<dynamic> userList = data['users'];
@@ -70,8 +71,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
         );
 
         if (response.statusCode == 200) {
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('User updated')));
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(const SnackBar(content: Text('User updated')));
           setState(() {
             isUpdateMode = false;
             updatingUserId = null;
@@ -113,8 +115,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       _fetchUser();
     } catch (e) {
       print("Error: $e");
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('Network error.')));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Network error.')));
     } finally {
       setState(() {
         isLoading = false;
@@ -142,65 +145,73 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
   }
 
- Future<void> _deleteUser(int id) async {
-  // Show the confirmation dialog before deleting
-  bool shouldDelete = await _showDeleteConfirmationDialog();
-  
-  if (!shouldDelete) return; // If user cancels, do not proceed with deletion
+  Future<void> _deleteUser(int id) async {
+    // Show the confirmation dialog before deleting
+    bool shouldDelete = await _showDeleteConfirmationDialog();
 
-  try {
-    final response = await UserServices.deleteUser(id);
-    if (response.statusCode == 200) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('User deleted')));
-      _fetchUser();
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Delete failed: ${response.body}')),
-      );
+    if (!shouldDelete) return; // If user cancels, do not proceed with deletion
+
+    try {
+      final response = await UserServices.deleteUser(id);
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('User deleted')));
+        _fetchUser();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Delete failed: ${response.body}')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Error deleting user')));
     }
-  } catch (e) {
-    ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Error deleting user')));
   }
-}
 
-Future<bool> _showDeleteConfirmationDialog() async {
-  return await showDialog<bool>(
-    context: context,
-    barrierDismissible: false, // Prevent dismissing the dialog by tapping outside
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Confirm Deletion'),
-        content: const Text('Are you sure you want to delete this user?'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(false); // Return false when 'No' is pressed
-            },
-            child: const Text('No'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(true); // Return true when 'Yes' is pressed
-            },
-            child: const Text('Yes'),
-          ),
-        ],
-      );
-    },
-  ) ?? false; // If the user taps outside the dialog, return false
-}
-
+  Future<bool> _showDeleteConfirmationDialog() async {
+    return await showDialog<bool>(
+          context: context,
+          barrierDismissible:
+              false, // Prevent dismissing the dialog by tapping outside
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Confirm Deletion'),
+              content: const Text('Are you sure you want to delete this user?'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(
+                      context,
+                    ).pop(false); // Return false when 'No' is pressed
+                  },
+                  child: const Text('No'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(
+                      context,
+                    ).pop(true); // Return true when 'Yes' is pressed
+                  },
+                  child: const Text('Yes'),
+                ),
+              ],
+            );
+          },
+        ) ??
+        false; // If the user taps outside the dialog, return false
+  }
 
   void _filterUsers() {
     final keyword = _searchController.text.toLowerCase();
     setState(() {
-      filteredUsers = users.where((user) {
-        final name = user.userName?.toLowerCase() ?? '';
-        final email = user.email?.toLowerCase() ?? '';
-        return name.contains(keyword) || email.contains(keyword);
-      }).toList();
+      filteredUsers =
+          users.where((user) {
+            final name = user.userName?.toLowerCase() ?? '';
+            final email = user.email?.toLowerCase() ?? '';
+            return name.contains(keyword) || email.contains(keyword);
+          }).toList();
     });
   }
 
@@ -240,19 +251,21 @@ Future<bool> _showDeleteConfirmationDialog() async {
                     duration: const Duration(milliseconds: 300),
                     height: _showSearchBar ? 60 : 0,
                     padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: _showSearchBar
-                        ? TextField(
-                            controller: _searchController,
-                            decoration: const InputDecoration(
-                              hintText: 'Search by username or email',
-                              prefixIcon: Icon(Icons.search),
-                              border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
+                    child:
+                        _showSearchBar
+                            ? TextField(
+                              controller: _searchController,
+                              decoration: const InputDecoration(
+                                hintText: 'Search by username or email',
+                                prefixIcon: Icon(Icons.search),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10),
+                                  ),
+                                ),
                               ),
-                            ),
-                          )
-                        : null,
+                            )
+                            : null,
                   ),
                   const SizedBox(height: 30),
                   TextFormField(
@@ -296,8 +309,8 @@ Future<bool> _showDeleteConfirmationDialog() async {
                         borderSide: BorderSide(color: Colors.blue),
                       ),
                       suffixIcon: IconButton(
-                        onPressed: () =>
-                            setState(() => showPassword = !showPassword),
+                        onPressed:
+                            () => setState(() => showPassword = !showPassword),
                         icon: Icon(
                           showPassword
                               ? Icons.visibility
@@ -309,10 +322,11 @@ Future<bool> _showDeleteConfirmationDialog() async {
                   const SizedBox(height: 30),
                   TextFormField(
                     controller: usernameController,
-                    validator: (value) =>
-                        value == null || value.isEmpty
-                            ? 'Username is required'
-                            : null,
+                    validator:
+                        (value) =>
+                            value == null || value.isEmpty
+                                ? 'Username is required'
+                                : null,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Username',
@@ -327,16 +341,17 @@ Future<bool> _showDeleteConfirmationDialog() async {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: isLoading ? null : _registerOrUpdate,
-                          child: isLoading
-                              ? const SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: Colors.white,
-                                  ),
-                                )
-                              : Text(isUpdateMode ? "Update" : "Register"),
+                          child:
+                              isLoading
+                                  ? const SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                  : Text(isUpdateMode ? "Update" : "Register"),
                         ),
                       ),
                       if (isUpdateMode) const SizedBox(width: 10),
@@ -377,7 +392,9 @@ Future<bool> _showDeleteConfirmationDialog() async {
                       ),
                     )
                   else
-                    ...filteredUsers.map((user) {
+                    ...filteredUsers.asMap().entries.map((entry) {
+                      final index = entry.key;
+                      final user = entry.value;
                       return Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 20,
@@ -390,7 +407,9 @@ Future<bool> _showDeleteConfirmationDialog() async {
                         ),
                         child: Row(
                           children: [
-                            Expanded(child: Text(user.id.toString())),
+                            Expanded(
+                              child: Text((index + 1).toString()),
+                            ), // Show index instead of user.id
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -417,8 +436,7 @@ Future<bool> _showDeleteConfirmationDialog() async {
                                       Icons.delete,
                                       color: Colors.red,
                                     ),
-                                    onPressed: () =>
-                                        _deleteUser(user.id!),
+                                    onPressed: () => _deleteUser(user.id!),
                                   ),
                                 ],
                               ),
