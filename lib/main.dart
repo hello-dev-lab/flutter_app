@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:admin_front/screen/splash_screen.dart';
+import 'package:admin_front/pages/login_page/login_page.dart';
+import 'package:admin_front/pages/login_page/register_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,16 +9,16 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Simple App',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const SplashScreen(),
+      initialRoute: '/login',
+      routes: {
+        '/login': (context) => const LoginPage(),
+        '/register': (context) => const RegisterPage(),
+      },
     );
   }
 }
