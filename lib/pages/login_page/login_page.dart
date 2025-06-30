@@ -1,6 +1,8 @@
+import 'package:admin_front/components/my_button.dart';
 import 'package:flutter/material.dart';
 import 'package:admin_front/components/my_width.dart';
-import 'package:admin_front/components/my_button.dart';
+import 'package:flutter_signin_button/button_list.dart';
+import 'package:flutter_signin_button/button_view.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -109,11 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                           MyButton(
                             width: double.infinity,
                             onPressed: () {
-                              if (formKey.currentState!.validate()) {
-                                print("Email: ${userCtrl.text}");
-                                print("Password: ${passCtrl.text}");
-                                 
-                              }
+                              Navigator.pushNamedAndRemoveUntil(context, '/navigation', (_) => false);
                             },
                             child: const Text(
                               'Login',
@@ -139,18 +137,13 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           const SizedBox(height: 20),
                           Container(
-                            margin: const EdgeInsets.only(left: 150),
-                            child: Row(
+                            margin: const EdgeInsets.only(left: 80),
+                            child: Column(
+                              
                               children: [
-                                Image.network(
-                                  'https://static.vecteezy.com/system/resources/previews/018/930/698/non_2x/facebook-logo-facebook-icon-transparent-free-png.png',
-                                  width: 60,
-                                ),
-                                const SizedBox(width: 20),
-                                Image.network(
-                                  'https://static.vecteezy.com/system/resources/previews/022/613/027/non_2x/google-icon-logo-symbol-free-png.png',
-                                  width: 40,
-                                ),
+                                SignInButton(Buttons.Facebook, onPressed: () {}),
+                                SizedBox(width: 20),
+                                SignInButton(Buttons.Google, onPressed: () {})
                               ],
                             ),
                           ),
@@ -182,12 +175,11 @@ class _LoginPageState extends State<LoginPage> {
   Widget buildRemember() {
     return GestureDetector(
       onTap: () {
-        // Add your logic for remember me toggle
       },
       child: Row(
         children: [
           Transform.scale(
-            scale: 1.2,
+            scale: 1.0,
             child: Checkbox(
               checkColor: Colors.white,
               side: const BorderSide(color: Colors.grey),
@@ -197,11 +189,10 @@ class _LoginPageState extends State<LoginPage> {
               fillColor: const MaterialStatePropertyAll(Colors.blue),
               value: false,
               onChanged: (bool? value) {
-                // Handle checkbox change
               },
             ),
           ),
-          const MyWidth(width: 1),
+          // const MyWidth(width: 1),
           const Text(
             'Remember Me',
             style: TextStyle(fontSize: 16, color: Colors.white),

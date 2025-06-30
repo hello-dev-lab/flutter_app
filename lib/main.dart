@@ -1,9 +1,17 @@
+import 'package:admin_front/pages/Dashboard/navigation.dart';
+import 'package:admin_front/pages/provider/bottom_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:admin_front/pages/login_page/login_page.dart';
 import 'package:admin_front/pages/login_page/register_page.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => BottomProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -18,6 +26,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
+        '/navigation': (context) => const Navigation(),
       },
     );
   }

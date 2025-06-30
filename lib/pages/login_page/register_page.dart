@@ -11,11 +11,13 @@ class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController emailCtrl = TextEditingController();
   final TextEditingController passwordCtrl = TextEditingController();
+  final TextEditingController firstNameCtrl = TextEditingController();
+  final TextEditingController lastnameCtrl = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[800],
+      backgroundColor: Colors.blueGrey[900],
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Center(
@@ -35,28 +37,62 @@ class _RegisterPageState extends State<RegisterPage> {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 30),
+                  Text('FirstName', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
+                  TextFormField(
+                    controller: firstNameCtrl,
+                    decoration: InputDecoration(
+                      hintText: 'FirstName',
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) return 'Please enter firstName';
+                     
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 30),
+                  Text('LastName', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
+                  TextFormField(
+                    controller: lastnameCtrl,
+                    decoration: InputDecoration(
+                      hintText: 'LastName',
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) return 'Please enter lastname';
+                      
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 30),
+                  Text('Email', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
                   TextFormField(
                     controller: emailCtrl,
                     decoration: InputDecoration(
-                      labelText: 'Email',
+                      hintText: 'Email',
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) return 'Please enter email';
-                      if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                      if (!RegExp('^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
                         return 'Enter a valid email';
                       }
                       return null;
                     },
                   ),
                   const SizedBox(height: 16),
+                  Text('Password', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
                   TextFormField(
                     controller: passwordCtrl,
                     obscureText: true,
                     decoration: InputDecoration(
-                      labelText: 'Password',
+                      hintText: 'Password',
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(),
@@ -83,7 +119,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       Navigator.pop(context); // Back to login page
                     },
                     child: const Text(
-                      'Back to Login',
+                      'Already have an account? Login',
                       style: TextStyle(color: Colors.white),
                     ),
                   ),

@@ -1,3 +1,4 @@
+import 'package:admin_front/pages/Dashboard/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:admin_front/pages/login_page/login_page.dart';
 import 'package:admin_front/pages/login_page/register_page.dart';
@@ -12,6 +13,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const LoginPage());
       case '/register':
         return MaterialPageRoute(builder: (_) => const RegisterPage());
+      case '/navigation':
+        return MaterialPageRoute(builder: (_) => const Navigation());
       default:
         return  MaterialPageRoute(
           builder: (_) => const Scaffold(
