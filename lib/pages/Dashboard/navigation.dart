@@ -1,10 +1,10 @@
-import 'package:admin_front/pages/Dashboard/dashboard.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:admin_front/pages/Dashboard/home.dart';
 import 'package:admin_front/pages/Dashboard/search.dart';
 import 'package:admin_front/pages/Dashboard/setting.dart';
 import 'package:admin_front/pages/provider/bottom_provider.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:admin_front/pages/Dashboard/dashboard_page/dashboard.dart';
 
 class Navigation extends StatelessWidget {
   const Navigation({super.key});

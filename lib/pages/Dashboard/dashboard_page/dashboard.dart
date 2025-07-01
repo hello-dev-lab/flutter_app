@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:admin_front/pages/Dashboard/dashboard_page/product_page.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -31,31 +32,70 @@ class _HomeState extends State<Dashboard> {
               crossAxisCount: 2,
               crossAxisSpacing: 12,
               mainAxisSpacing: 12,
-              children: const [
-                _StatCard(
-                  title: 'Total orders',
-                  value: '20.000',
-                  icon: Icons.shopping_cart,
-                  color: Color(0xFF6C91D5),
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Container(),
+                      ),
+                    );
+                  },
+                  child: const _StatCard(
+                    title: 'Total orders',
+                    value: '20.000',
+                    icon: Icons.shopping_cart,
+                    color: Color(0xFF6C91D5),
+                  ),
                 ),
-                _StatCard(
-                  title: 'Total Customers',
-                  value: '2,000',
-                  color: Color(0xFF8ECACA),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Container(),
+                      ),
+                    );
+                  },
+                  child: const _StatCard(
+                    title: 'Total Customers',
+                    value: '2,000',
+                    color: Color(0xFF8ECACA),
+                  ),
                 ),
-                _StatCard(
-                  title: 'Total Products',
-                  value: '400',
-                  color: Color(0xFFA89D94),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ProductPage(),
+                      ),
+                    );
+                  },
+                  child: const _StatCard(
+                    title: 'Total Products',
+                    value: '400',
+                    color: Color.fromARGB(255, 82, 74, 68),
+                  ),
                 ),
-                _StatCard(
-                  title: 'Total Cate',
-                  value: '-',
-                  color: Color(0xFF8C7DBA),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Container(),
+                      ),
+                    );
+                  },
+                  child: const _StatCard(
+                    title: 'Total Cate',
+                    value: '-',
+                    color: Color(0xFF8C7DBA),
+                  ),
                 ),
               ],
             ),
-            
           ],
         ),
       ),
@@ -69,7 +109,12 @@ class _StatCard extends StatelessWidget {
   final IconData? icon;
   final Color color;
 
-  const _StatCard({required this.title, required this.value, required this.color, this.icon});
+  const _StatCard({
+    required this.title,
+    required this.value,
+    required this.color,
+    this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +130,10 @@ class _StatCard extends StatelessWidget {
           if (icon != null) Icon(icon, color: Colors.white),
           Text(
             title,
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           const SizedBox(height: 4),
           Text(
@@ -104,7 +152,12 @@ class _OrderItem extends StatelessWidget {
   final String date;
   final String total;
 
-  const _OrderItem({required this.initial, required this.name, required this.date, required this.total});
+  const _OrderItem({
+    required this.initial,
+    required this.name,
+    required this.date,
+    required this.total,
+  });
 
   @override
   Widget build(BuildContext context) {

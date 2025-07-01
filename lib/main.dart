@@ -1,9 +1,10 @@
-import 'package:admin_front/pages/Dashboard/navigation.dart';
-import 'package:admin_front/pages/provider/bottom_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:admin_front/pages/login_page/login_page.dart';
-import 'package:admin_front/pages/login_page/register_page.dart';
 import 'package:provider/provider.dart';
+import 'package:admin_front/pages/Dashboard/navigation.dart';
+import 'package:admin_front/pages/login_page/login_page.dart';
+import 'package:admin_front/pages/provider/bottom_provider.dart';
+import 'package:admin_front/pages/login_page/register_page.dart';
+import 'package:admin_front/pages/Dashboard/dashboard_page/add_product.dart';
 
 void main() {
   runApp(
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
         '/navigation': (context) => const Navigation(),
+        '/addproduct': (context) => const AddProduct(),
       },
     );
   }

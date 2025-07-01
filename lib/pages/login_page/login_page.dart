@@ -1,6 +1,6 @@
-import 'package:admin_front/components/my_button.dart';
 import 'package:flutter/material.dart';
 import 'package:admin_front/components/my_width.dart';
+import 'package:admin_front/components/my_button.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 
@@ -54,6 +54,7 @@ class _LoginPageState extends State<LoginPage> {
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.grey,
+                              hintText: 'Email',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -82,6 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.grey,
+                              hintText: 'Password',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -137,12 +139,11 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           const SizedBox(height: 20),
                           Container(
-                            margin: const EdgeInsets.only(left: 80),
+                            margin: const EdgeInsets.only(left: 100),
                             child: Column(
-                              
                               children: [
                                 SignInButton(Buttons.Facebook, onPressed: () {}),
-                                SizedBox(width: 20),
+                                SizedBox(height: 10,),
                                 SignInButton(Buttons.Google, onPressed: () {})
                               ],
                             ),
